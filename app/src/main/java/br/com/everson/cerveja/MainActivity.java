@@ -3,6 +3,7 @@ package br.com.everson.cerveja;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -136,8 +137,10 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -147,8 +150,17 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_estatisticas) {
+            Intent intent = new Intent(this, EstatisticasActivity.class);
+            startActivity(intent);
+        }
+        if (id == R.id.action_milestones) {
+            Intent intent = new Intent(this, MilestonesActivity.class);
+            startActivity(intent);
+        }
+        if (id == R.id.action_amizades) {
+            Intent intent = new Intent(this, AmizadeActivity.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

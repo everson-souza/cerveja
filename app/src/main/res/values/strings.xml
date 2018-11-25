@@ -1,4 +1,9 @@
 <resources>
-    <string name="app_name">cerveja</string>
-    <string name="action_settings">Settings</string>
+    <string name="app_name">Cerveja</string>
+    <string name="action_milestones">Milestones</string>
+    <string name="action_estatisticas">Estatísticas</string>
+    <string name="action_amizades">Amizades</string>
+    <string name="title_activity_milestones">Milestones</string>
+    <string name="title_activity_estatisticas">Estatísticas</string>
+    <string name="title_activity_amizade">Amizade</string>
 </resources>
