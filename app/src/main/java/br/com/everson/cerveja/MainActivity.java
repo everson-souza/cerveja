@@ -1,5 +1,8 @@
 package br.com.everson.cerveja;
 
+import android.app.ActionBar;
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -9,8 +12,14 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,10 +27,19 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import static java.lang.Integer.parseInt;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,21 +50,61 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        String url = "https://www.formore.com.br/mobile/api/usuario/sing_up.php?email=rodrigo.f.ss%40uol.com.br";
+        String url = "https://www.formore.com.br/mobile/api/feed/read_feed.php?token=1)alskd";
 
-        ListView listaCervejas = (ListView) findViewById(R.id.lista_cervejas);
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
 
                     @Override
-                    public void onResponse(JSONObject response) {
-//                        TextView listaAlunos = (TextView) findViewById(R.id.cervejas);
-//                        listaAlunos.setText("Response: " + response.toString());
-//                        String resposta = response.toString();
-                        //Log.e("onResponse",""+response);
-                        Toast.makeText(MainActivity.this, response.toString(), Toast.LENGTH_LONG).show();
+                    public void onResponse(JSONArray response) {
+                        int id;
+                        String name, autor, local, lat, longi, avaliacao, imagem, data, desc, tipo ;
+                        LinearLayout mContent =(LinearLayout) findViewById(R.id.mContent);
 
+                        List<TextView> textos = new ArrayList<>();
+
+                        for (int i = 0; i < response.length(); i++) {
+                            JSONObject row = null;
+                            try {
+                                row = response.getJSONObject(i);
+                                name = row.getString("NomeCerveja");
+                                local = row.getString("Local");
+                                data = row.getString("Data");
+                                id = row.getInt("IDPublicacao");
+                                Toast.makeText(MainActivity.this, name.toString(), Toast.LENGTH_LONG).show();
+
+//                                final ImageView imgItem = new ImageView(MainActivity.this);
+//                                imgItem.setId(id);
+//                                imgItem.set(name);
+//                                mContent.addView(txtItem);
+
+                                final TextView txtItem = new TextView(MainActivity.this);
+                                txtItem.setId(id);
+                                txtItem.setText(name);
+                                mContent.addView(txtItem);
+                                if (row.getInt("Tipo") == 1) {
+                                    txtItem.setTextAppearance(getApplicationContext(), R.style.nome_publicacao);
+                                }else{
+                                    txtItem.setTextAppearance(getApplicationContext(), R.style.nome_publicacao_stories);
+                                }
+
+                                final TextView localItem = new TextView(MainActivity.this);
+                                localItem.setText(local);
+                                mContent.addView(localItem);
+
+                                final TextView dataItem = new TextView(MainActivity.this);
+                                dataItem.setText(data);
+                                mContent.addView(dataItem);
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            //String resposta = response.toString();
+                            //Log.e("onResponse", "" + response);
+                            //Toast.makeText(MainActivity.this, response.toString(), Toast.LENGTH_LONG).show();
+
+                        }
                     }
                 }, new Response.ErrorListener() {
 
@@ -58,11 +116,11 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-                //Creating request queue
-                RequestQueue requestQueue = Volley.newRequestQueue(this);
+        //Creating request queue
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
 
-                //Adding request to queue
-                requestQueue.add(jsonObjectRequest);
+        //Adding request to queue
+        requestQueue.add(jsonArrayRequest);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
