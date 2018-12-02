@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <item name="emailUsuario" type="id"/>
+    <item name="nomeUsuario" type="id"/>
+    <item name="cidadeUsuario" type="id"/>
+    <item name="estadoUsuario" type="id"/>
+    <item name="paisUsuario" type="id"/>
+
+</resources>

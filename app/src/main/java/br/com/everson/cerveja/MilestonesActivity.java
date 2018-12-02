@@ -36,8 +36,8 @@ public class MilestonesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_milestones);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        String url = "https://www.formore.com.br/mobile/api/estatisticas/milestones.php?token=1)alskd";
+        String token = br.com.everson.cerveja.Singleton.getInstance().getValue();
+        String url = "https://www.formore.com.br/mobile/api/estatisticas/milestones.php?token="+token;
 
 
 

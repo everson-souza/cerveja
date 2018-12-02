@@ -18,4 +18,9 @@
         android:orderInCategory="100"
         android:title="@string/action_amizades"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_usuarios"
+        android:orderInCategory="100"
+        android:title="@string/action_usuarios"
+        app:showAsAction="never" />
 </menu>

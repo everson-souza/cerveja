@@ -30,7 +30,8 @@ public class EstatisticasActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_estatisticas);
 
-        String url = "https://www.formore.com.br/mobile/api/estatisticas/estatisticas.php?token=1)alskd";
+        String token = br.com.everson.cerveja.Singleton.getInstance().getValue();
+        String url = "https://www.formore.com.br/mobile/api/estatisticas/estatisticas.php?token="+token;
 
 
 
