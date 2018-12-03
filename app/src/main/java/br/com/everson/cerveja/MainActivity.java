@@ -50,9 +50,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        String url = "https://www.formore.com.br/mobile/api/feed/read_feed.php?token=1)alskd";
-
+        String token = br.com.everson.cerveja.Singleton.getInstance().getValue();
+        String url;
+        if (token ==null) {
+            url = "https://www.formore.com.br/mobile/api/feed/read_feed.php?token=1)alskd";
+        }else{
+            url = "https://www.formore.com.br/mobile/api/feed/read_feed.php?token="+token;
+        }
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
@@ -73,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                                 local = row.getString("Local");
                                 data = row.getString("Data");
                                 id = row.getInt("IDPublicacao");
-                                Toast.makeText(MainActivity.this, name.toString(), Toast.LENGTH_LONG).show();
+                                //Toast.makeText(MainActivity.this, name.toString(), Toast.LENGTH_LONG).show();
 
 //                                final ImageView imgItem = new ImageView(MainActivity.this);
 //                                imgItem.setId(id);
@@ -112,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
-                        Toast.makeText(MainActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+                        //Toast.makeText(MainActivity.this, error.toString(), Toast.LENGTH_LONG).show();
 
                     }
                 });
@@ -137,8 +141,10 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -148,10 +154,22 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_estatisticas) {
+            Intent intent = new Intent(this, EstatisticasActivity.class);
+            startActivity(intent);
         }
-
+        if (id == R.id.action_milestones) {
+            Intent intent = new Intent(this, MilestonesActivity.class);
+            startActivity(intent);
+        }
+        if (id == R.id.action_amizades) {
+            Intent intent = new Intent(this, AmizadeActivity.class);
+            startActivity(intent);
+        }
+        if (id == R.id.action_usuarios) {
+            Intent intent = new Intent(this, UsuarioActivity.class);
+            startActivity(intent);
+        }
         return super.onOptionsItemSelected(item);
     }
 
